@@ -3,27 +3,39 @@ import { homedir, platform } from "os"
 import { join } from "path"
 import prettyBytes from "pretty-bytes"
 
-const cachePaths = {
-  npm: {
-    linux: ".npm/_cacache",
-    win32: "AppData/npm-cache / _cacache",
+const cachePaths = [
+  {
+    name: "npm",
+    paths: {
+      linux: ".npm/_cacache",
+      win32: "AppData/npm-cache / _cacache",
+    },
   },
-  pnpm: {
-    linux: ".local/share/pnpm/store",
-    win32: "AppData/Local/pnpm/store",
-    darwin: "Library/pnpm/store",
+  {
+    name: "pnpm",
+    paths: {
+      linux: ".local/share/pnpm/store",
+      win32: "AppData/Local/pnpm/store",
+      darwin: "Library/pnpm/store",
+    },
   },
-  yarn: {
-    linux: ".cache/yarn",
-    win32: "AppData/Local/Yarn/Cache",
-    darwin: "Library/Caches/Yarn",
+  {
+    name: "yarn",
+    paths: {
+      linux: ".cache/yarn",
+      win32: "AppData/Local/Yarn/Cache",
+      darwin: "Library/Caches/Yarn",
+    },
   },
-  berry: {
-    linux: ".local/share/yarn/berry",
-    win32: "AppData/Local/Yarn/Berry",
-    darwin: ".yarn/berry",
+  {
+    name: "berry",
+    paths: {
+      linux: ".local/share/yarn/berry",
+      win32: "AppData/Local/Yarn/Berry",
+      darwin: ".yarn/berry",
+    },
   },
-}
+]
 
 async function size(path: string): Promise<number> {
   const stats = await stat(path)
@@ -39,7 +51,7 @@ async function size(path: string): Promise<number> {
   }
 }
 
-for (const [pm, paths] of Object.entries(cachePaths)) {
+for (const { name, paths } of cachePaths) {
   const cachePath = join(homedir(), paths[platform()] ?? paths.linux)
-  console.log(pm, prettyBytes(await size(cachePath)))
+  console.log(name, prettyBytes(await size(cachePath)))
 }

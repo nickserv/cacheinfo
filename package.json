@@ -10,6 +10,7 @@
   ],
   "license": "ISC",
   "author": "Nick McCurdy <nick@nickmccurdy.com> (https://nickmccurdy.com/)",
+  "funding": "https://github.com/nickmccurdy/cacheinfo?sponsor=1",
   "dependencies": {
     "pretty-bytes": "^6.0.0"
   },

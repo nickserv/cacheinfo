@@ -3,7 +3,10 @@ import { homedir, platform } from "os"
 import { join } from "path"
 import prettyBytes from "pretty-bytes"
 
-const cachePaths = [
+const cachePaths: {
+  name: string
+  paths: { [_ in NodeJS.Platform]?: string }
+}[] = [
   {
     name: "npm",
     paths: {
@@ -52,6 +55,6 @@ async function size(path: string): Promise<number> {
 }
 
 for (const { name, paths } of cachePaths) {
-  const cachePath = join(homedir(), paths[platform()] ?? paths.linux)
+  const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
   console.log(name, prettyBytes(await size(cachePath)))
 }

@@ -54,7 +54,7 @@ async function size(path: string): Promise<number> {
   }
 }
 
-for (const { name, paths } of cachePaths) {
+cachePaths.forEach(async ({ name, paths }) => {
   const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
   console.log(name, prettyBytes(await size(cachePath)))
-}
+})

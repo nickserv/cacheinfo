@@ -55,6 +55,16 @@ async function size(path: string): Promise<number> {
 }
 
 cachePaths.forEach(async ({ name, paths }) => {
-  const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
-  console.log(name, prettyBytes(await size(cachePath)))
+  try {
+    const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
+    console.log(name, prettyBytes(await size(cachePath)))
+  } catch (error) {
+    if (
+      !(error instanceof Error) ||
+      !("code" in error) ||
+      (error as NodeJS.ErrnoException).code !== "ENOENT"
+    ) {
+      throw error
+    }
+  }
 })

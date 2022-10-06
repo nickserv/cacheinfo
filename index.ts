@@ -54,16 +54,19 @@ async function size(path: string): Promise<number> {
   }
 }
 
+function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
+  return (
+    error instanceof Error &&
+    ["errno", "code", "path", "syscall"].some((key) => key in error)
+  )
+}
+
 cachePaths.forEach(async ({ name, paths }) => {
   try {
     const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
     console.log(name, prettyBytes(await size(cachePath)))
   } catch (error) {
-    if (
-      !(error instanceof Error) ||
-      !("code" in error) ||
-      (error as NodeJS.ErrnoException).code !== "ENOENT"
-    ) {
+    if (!isErrnoException(error) || error.code !== "ENOENT") {
       throw error
     }
   }

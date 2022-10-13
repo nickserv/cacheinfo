@@ -1,7 +1,7 @@
 import { readdir, stat } from "fs/promises"
 import { homedir, platform } from "os"
 import { join } from "path"
-import prettyBytes from "pretty-bytes"
+import { ReadableStream } from "stream/web"
 
 const cachePaths: {
   name: string
@@ -61,13 +61,19 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
   )
 }
 
-cachePaths.forEach(async ({ name, paths }) => {
-  try {
-    const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
-    console.log(name, prettyBytes(await size(cachePath)))
-  } catch (error) {
-    if (!isErrnoException(error) || error.code !== "ENOENT") {
-      throw error
-    }
-  }
-})
+export default function cacheinfo() {
+  return new ReadableStream<[string, number]>({
+    start(controller) {
+      cachePaths.forEach(async ({ name, paths }) => {
+        try {
+          const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
+          controller.enqueue([name, await size(cachePath)])
+        } catch (error) {
+          if (!isErrnoException(error) || error.code !== "ENOENT") {
+            controller.error(error)
+          }
+        }
+      })
+    },
+  })
+}

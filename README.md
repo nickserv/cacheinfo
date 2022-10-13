@@ -2,6 +2,12 @@
 
 Info about your JavaScript package manager cache sizes
 
+## Usage
+
+```
+npx cacheinfo
+```
+
 ## Example
 
 ```

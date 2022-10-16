@@ -64,10 +64,13 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
 export default function cacheinfo() {
   return new ReadableStream<[string, number]>({
     start(controller) {
+      let remaining = cachePaths.length
+
       cachePaths.forEach(async ({ name, paths }) => {
         try {
           const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
           controller.enqueue([name, await size(cachePath)])
+          if (!--remaining) controller.close()
         } catch (error) {
           if (!isErrnoException(error) || error.code !== "ENOENT") {
             controller.error(error)

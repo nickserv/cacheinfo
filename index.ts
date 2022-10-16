@@ -11,7 +11,7 @@ const cachePaths: {
     name: "npm",
     paths: {
       linux: ".npm/_cacache",
-      win32: "AppData/npm-cache/_cacache",
+      win32: "AppData/Local/npm-cache/_cacache",
     },
   },
   {

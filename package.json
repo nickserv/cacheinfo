@@ -13,9 +13,7 @@
   "funding": "https://github.com/nickmccurdy/cacheinfo?sponsor=1",
   "main": "dist",
   "types": "dist",
-  "bin": {
-    "cacheinfo": "dist/cli.js"
-  },
+  "bin": "dist/cli.js",
   "repository": "nickmccurdy/cacheinfo",
   "scripts": {
     "prepare": "tsc"

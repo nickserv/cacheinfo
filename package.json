@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "cacheinfo",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Info about your JavaScript package manager cache sizes",
   "keywords": [
     "info",

@@ -13,10 +13,10 @@
   "funding": "https://github.com/sponsors/nickmccurdy",
   "main": "dist",
   "types": "dist",
-  "bin": "dist/cli",
+  "bin": "dist/cli.js",
   "repository": "nickmccurdy/cacheinfo",
   "scripts": {
-    "prepare": "tsc"
+    "prepare": "tsc && chmod +x dist/cli.js"
   },
   "dependencies": {
     "pretty-bytes": "^6.0.0"

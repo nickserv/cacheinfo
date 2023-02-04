@@ -12,7 +12,7 @@ npx cacheinfo
 
 ### Library
 
-`cacheinfo` is a function that returns a `ReadableStream<[string, number]>`
+`cacheinfo` is a function that returns a `ReadableStream<[string, number]>` with the name and size (in bytes) of each package manager cache
 
 ```ts
 import cacheinfo from "cacheinfo"

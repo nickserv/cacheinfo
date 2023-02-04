@@ -5,38 +5,38 @@ import { ReadableStream } from "stream/web"
 
 const cachePaths: {
   name: string
-  paths: { [_ in NodeJS.Platform]?: string }
+  paths: Map<NodeJS.Platform, string>
 }[] = [
   {
     name: "npm",
-    paths: {
-      linux: ".npm/_cacache",
-      win32: "AppData/Local/npm-cache/_cacache",
-    },
+    paths: new Map([
+      ["linux", ".npm/_cacache"],
+      ["win32", "AppData/Local/npm-cache/_cacache"],
+    ]),
   },
   {
     name: "pnpm",
-    paths: {
-      linux: ".local/share/pnpm/store",
-      win32: "AppData/Local/pnpm/store",
-      darwin: "Library/pnpm/store",
-    },
+    paths: new Map([
+      ["linux", ".local/share/pnpm/store"],
+      ["win32", "AppData/Local/pnpm/store"],
+      ["darwin", "Library/pnpm/store"],
+    ]),
   },
   {
     name: "yarn",
-    paths: {
-      linux: ".cache/yarn",
-      win32: "AppData/Local/Yarn/Cache",
-      darwin: "Library/Caches/Yarn",
-    },
+    paths: new Map([
+      ["linux", ".cache/yarn"],
+      ["win32", "AppData/Local/Yarn/Cache"],
+      ["darwin", "Library/Caches/Yarn"],
+    ]),
   },
   {
     name: "berry",
-    paths: {
-      linux: ".local/share/yarn/berry",
-      win32: "AppData/Local/Yarn/Berry",
-      darwin: ".yarn/berry",
-    },
+    paths: new Map([
+      ["linux", ".local/share/yarn/berry"],
+      ["win32", "AppData/Local/Yarn/Berry"],
+      ["darwin", ".yarn/berry"],
+    ]),
   },
 ]
 
@@ -68,8 +68,8 @@ export default function cacheinfo() {
 
       cachePaths.forEach(async ({ name, paths }) => {
         try {
-          const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
-          controller.enqueue([name, await size(cachePath)])
+          const cachePath = paths.get(platform()) ?? paths.get("linux")!
+          controller.enqueue([name, await size(join(homedir(), cachePath))])
           if (!--remaining) controller.close()
         } catch (error) {
           if (!isErrnoException(error) || error.code !== "ENOENT") {

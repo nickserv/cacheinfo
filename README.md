@@ -11,6 +11,8 @@ npx cacheinfo
 ```
 
 ```
+bun ... MB
+deno ... MB
 npm ... MB
 pnpm ... MB
 yarn classic ... MB

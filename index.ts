@@ -8,6 +8,20 @@ const cachePaths: {
   paths: { [_ in NodeJS.Platform]?: string }
 }[] = [
   {
+    name: "bun",
+    paths: {
+      linux: ".bun/install/cache",
+    },
+  },
+  {
+    name: "deno",
+    paths: {
+      linux: ".cache/deno",
+      win32: "AppData/Local/deno",
+      darwin: "Library/Caches/deno",
+    },
+  },
+  {
     name: "npm",
     paths: {
       linux: ".npm/_cacache",

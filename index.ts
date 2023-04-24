@@ -47,9 +47,9 @@ const cachePaths: {
   {
     name: "yarn modern",
     paths: {
-      linux: ".local/share/yarn/berry",
-      win32: "AppData/Local/Yarn/Berry",
-      darwin: ".yarn/berry",
+      linux: ".local/share/yarn/berry/cache",
+      win32: "AppData/Local/Yarn/Berry/cache",
+      darwin: ".yarn/berry/cache",
     },
   },
 ]

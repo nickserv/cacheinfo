@@ -11,7 +11,9 @@ npx cacheinfo
 ```
 
 ```
+bower ... MB
 bun ... MB
+corepack ... MB
 deno ... MB
 npm ... MB
 pnpm ... MB

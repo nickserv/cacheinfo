@@ -8,9 +8,23 @@ const cachePaths: {
   paths: { [_ in NodeJS.Platform]?: string }
 }[] = [
   {
+    name: "bower",
+    paths: {
+      linux: ".cache/bower/packages",
+      win32: "AppData/Local/bower/packages",
+    },
+  },
+  {
     name: "bun",
     paths: {
       linux: ".bun/install/cache",
+    },
+  },
+  {
+    name: "corepack",
+    paths: {
+      linux: ".cache/node/corepack",
+      win32: "AppData/Local/node/corepack",
     },
   },
   {

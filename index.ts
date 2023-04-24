@@ -23,7 +23,7 @@ const cachePaths: {
     },
   },
   {
-    name: "yarn",
+    name: "yarn classic",
     paths: {
       linux: ".cache/yarn",
       win32: "AppData/Local/Yarn/Cache",
@@ -31,7 +31,7 @@ const cachePaths: {
     },
   },
   {
-    name: "berry",
+    name: "yarn modern",
     paths: {
       linux: ".local/share/yarn/berry",
       win32: "AppData/Local/Yarn/Berry",

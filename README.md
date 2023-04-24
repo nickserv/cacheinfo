@@ -13,8 +13,8 @@ npx cacheinfo
 ```
 npm ... MB
 pnpm ... MB
-yarn ... MB
-berry ... MB
+yarn classic ... MB
+yarn modern ... MB
 ```
 
 ### API

@@ -16,7 +16,8 @@
   "bin": "dist/cli.js",
   "repository": "nickmccurdy/cacheinfo",
   "scripts": {
-    "prepare": "tsc && chmod +x dist/cli.js"
+    "prepare": "tsc && chmod +x dist/cli.js",
+    "start": "tsc && node dist/cli.js"
   },
   "dependencies": {
     "pretty-bytes": "^6.0.0"

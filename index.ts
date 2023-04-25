@@ -1,7 +1,10 @@
 import { readdir, stat } from "fs/promises"
 import { homedir, platform } from "os"
 import { join } from "path"
-import { ReadableStream } from "stream/web"
+import EventEmitter from "events"
+import { type EventMap } from "typed-emitter"
+type TypedEventEmitter<Events extends EventMap> =
+  import("typed-emitter").default<Events>
 
 const cachePaths: {
   name: string
@@ -90,21 +93,24 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
 }
 
 export default function cacheinfo() {
-  return new ReadableStream<[string, number]>({
-    start(controller) {
-      let remaining = cachePaths.length
+  const emitter = new EventEmitter() as TypedEventEmitter<{
+    error(error: Error): void
+    progress(name: string, size: number): void
+    done(): void
+  }>
+  let remaining = cachePaths.length
 
-      cachePaths.forEach(async ({ name, paths }) => {
-        try {
-          const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
-          controller.enqueue([name, await size(cachePath)])
-          if (!--remaining) controller.close()
-        } catch (error) {
-          if (!isErrnoException(error) || error.code !== "ENOENT") {
-            controller.error(error)
-          }
-        }
-      })
-    },
+  cachePaths.forEach(async ({ name, paths }) => {
+    try {
+      const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
+      emitter.emit("progress", name, await size(cachePath))
+      if (!--remaining) emitter.emit("done")
+    } catch (error) {
+      if (!isErrnoException(error) || error.code !== "ENOENT") {
+        emitter.emit("error", error as Error)
+      }
+    }
   })
+
+  return emitter
 }

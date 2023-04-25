@@ -90,7 +90,7 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
 }
 
 export default function cacheinfo() {
-  return new ReadableStream<[string, number]>({
+  return new ReadableStream<[name: string, size: number]>({
     start(controller) {
       let remaining = cachePaths.length
 

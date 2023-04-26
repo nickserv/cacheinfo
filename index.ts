@@ -98,11 +98,12 @@ export default function cacheinfo() {
         try {
           const cachePath = join(homedir(), paths[platform()] ?? paths.linux!)
           controller.enqueue([name, await size(cachePath)])
-          if (!--remaining) controller.close()
         } catch (error) {
           if (!isErrnoException(error) || error.code !== "ENOENT") {
             controller.error(error)
           }
+        } finally {
+          if (!--remaining) controller.close()
         }
       })
     },

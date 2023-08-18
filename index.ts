@@ -73,8 +73,11 @@ async function size(path: string): Promise<number> {
 
 	if (stats.isDirectory()) {
 		const dirPaths = await readdir(path);
-		const dirSizes = await Promise.all(
+		const dirResults = await Promise.allSettled(
 			dirPaths.map((subpath) => size(join(path, subpath))),
+		);
+		const dirSizes = dirResults.map((result) =>
+			result.status === "fulfilled" ? result.value : 0,
 		);
 		return dirSizes.reduce((i, size) => i + size, 0);
 	} else {

@@ -1,35 +1,35 @@
 {
-  "type": "module",
-  "name": "cacheinfo",
-  "version": "1.0.6",
-  "description": "Info about your JavaScript package manager cache sizes",
-  "keywords": [
-    "info",
-    "reporting",
-    "diagnostics"
-  ],
-  "license": "ISC",
-  "author": "Nick McCurdy <nick@nickmccurdy.com> (https://nickmccurdy.com/)",
-  "funding": "https://github.com/sponsors/nickmccurdy",
-  "main": "dist",
-  "types": "dist",
-  "bin": "dist/cli.js",
-  "repository": "nickmccurdy/cacheinfo",
-  "scripts": {
-    "prepare": "tsc && chmod +x dist/cli.js",
-    "start": "tsc && node dist/cli.js"
-  },
-  "dependencies": {
-    "pretty-bytes": "^6.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^18.8.1",
-    "prettier": "^2.7.1",
-    "prettier-config-nick": "^1.0.6",
-    "typescript": "^4.8.4"
-  },
-  "engines": {
-    "node": ">=16.5.0"
-  },
-  "prettier": "prettier-config-nick"
+	"type": "module",
+	"name": "cacheinfo",
+	"version": "1.0.6",
+	"description": "Info about your JavaScript package manager cache sizes",
+	"keywords": [
+		"info",
+		"reporting",
+		"diagnostics"
+	],
+	"license": "ISC",
+	"author": "Nick McCurdy <nick@nickmccurdy.com> (https://nickmccurdy.com/)",
+	"funding": "https://github.com/sponsors/nickmccurdy",
+	"main": "dist",
+	"types": "dist",
+	"bin": "dist/cli.js",
+	"repository": "nickmccurdy/cacheinfo",
+	"scripts": {
+		"prepare": "tsc && chmod +x dist/cli.js",
+		"start": "tsc && node dist/cli.js"
+	},
+	"dependencies": {
+		"pretty-bytes": "^6.0.0"
+	},
+	"devDependencies": {
+		"@types/node": "^18.8.1",
+		"prettier": "^2.7.1",
+		"prettier-config-a11y": "^1.1.2",
+		"typescript": "^4.8.4"
+	},
+	"engines": {
+		"node": ">=16.5.0"
+	},
+	"prettier": "prettier-config-a11y"
 }

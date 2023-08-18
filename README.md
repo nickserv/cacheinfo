@@ -26,9 +26,9 @@ yarn modern ... MB
 `cacheinfo` is a function that returns a `ReadableStream<[name: string, size: number]>` with the name and size (in bytes) of each package manager cache
 
 ```ts
-import cacheinfo from "cacheinfo"
+import cacheinfo from "cacheinfo";
 
 for await (const [name, size] of cacheinfo()) {
-  // ...
+	// ...
 }
 ```

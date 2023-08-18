@@ -85,13 +85,6 @@ async function size(path: string): Promise<number> {
 	}
 }
 
-function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
-	return (
-		error instanceof Error &&
-		["errno", "code", "path", "syscall"].some((key) => key in error)
-	);
-}
-
 export default function cacheinfo() {
 	return new ReadableStream<[name: string, size: number]>({
 		start(controller) {
@@ -102,7 +95,13 @@ export default function cacheinfo() {
 					const cachePath = join(homedir(), paths[platform()] ?? paths.linux!);
 					controller.enqueue([name, await size(cachePath)]);
 				} catch (error) {
-					if (!isErrnoException(error) || error.code !== "ENOENT") {
+					if (
+						!(
+							error instanceof Error &&
+							"code" in error &&
+							error.code === "ENOENT"
+						)
+					) {
 						controller.error(error);
 					}
 				} finally {
